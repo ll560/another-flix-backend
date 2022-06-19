@@ -3,6 +3,9 @@ const app=express()
 require('dotenv').config()
 require('./config/database')
 
+//====MIDDLEWARES===
+app.use(express.json())
+
 //====ROUTES====
 app.use('/api/v1/movies', require('./routes/api/movies.js'))
 
