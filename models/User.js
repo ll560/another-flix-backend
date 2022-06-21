@@ -1,4 +1,4 @@
-const mogoose = require('mongoose')
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -28,12 +28,15 @@ const userSchema = new Schema({
         maxlength: 255,
         require: true
     },
-    phone: Number,
+    phone: String,
     picture: String,
     active: Boolean,
-    favorite:[]
+    favorite:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Movie'
+    }]
 }, {
     timestamps: true
 })
 
-module.exports = mogoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema)
