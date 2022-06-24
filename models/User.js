@@ -39,14 +39,18 @@ const userSchema = new Schema({
         ref: 'Movie'
     }]
 }, {
-    timestamps: true
+    timestamps: true, 
+    toJSON: {
+        //ret is the JSON'ed user document
+        transform: function(doc, ret){
+            delete ret.password //returns the object without the password
+            return ret
+        }
+    }
 })
 
 userSchema.pre('save', async function(next){
-    //only run this function if password was modified
-    //if the password is not modified then return next
-    if(this.isModified('password')) return next()
-    //user updated password, code runs below
+    
     this.password = await bcrypt.hash(this.password, saltRounds) //hash method turns the password into random strings
     return next()
 })
